@@ -71,7 +71,7 @@ public class MetroDAO {
 	}
 
 	public boolean fermateConnesse(Fermata fp, Fermata fa) {
-		String sql = "SELECT COUNT(*) AS C " + "FROM connessione " + "WHERE id_stazP=? " + "AND id_stazA=?";
+		String sql = "SELECT COUNT(*) AS C FROM connessione WHERE id_stazP=? AND id_stazA=?";
 
 		try {
 			Connection conn = DBConnect.getConnection();
@@ -82,7 +82,7 @@ public class MetroDAO {
 
 			ResultSet res = st.executeQuery();
 
-			res.first();
+			res.first();	// Se c'è almeno una linea che collega le due stazioni C >= 1 
 			int linee = res.getInt("C");
 
 			conn.close();
@@ -97,7 +97,7 @@ public class MetroDAO {
 	}
 
 	public List<Fermata> fermateSuccessive(Fermata fp, Map<Integer, Fermata> fermateIdMap) {
-		String sql = "SELECT DISTINCT id_stazA " + "FROM connessione " + "WHERE id_stazP=?";
+		String sql = "SELECT DISTINCT id_stazA FROM connessione WHERE id_stazP = ?";
 
 		List<Fermata> result = new ArrayList<>();
 
@@ -136,9 +136,7 @@ public class MetroDAO {
 			ResultSet res = st.executeQuery();
 			
 			while(res.next()) {
-				CoppiaFermate c = new CoppiaFermate(
-						fermateIdMap.get(res.getInt("id_stazP")),
-						fermateIdMap.get(res.getInt("id_stazA"))) ;
+				CoppiaFermate c = new CoppiaFermate(fermateIdMap.get(res.getInt("id_stazP")), fermateIdMap.get(res.getInt("id_stazA"))) ;
 				result.add(c);
 			}
 			
@@ -148,7 +146,7 @@ public class MetroDAO {
 			e.printStackTrace();
 		}
 		
-		return result ;
+		return result;
 	}
 
 }
