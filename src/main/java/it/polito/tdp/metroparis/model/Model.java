@@ -89,7 +89,7 @@ public class Model {
 		
 		GraphIterator<Fermata, DefaultEdge> bfv = new BreadthFirstIterator<>(graph, source);
 		while(bfv.hasNext()) {
-			visita.add( bfv.next() ) ;
+			visita.add(bfv.next());
 		}
 		
 		return visita ;
@@ -117,6 +117,7 @@ public class Model {
 				// questo arco ha scoperto un nuovo vertice?
 				// se sì, provenendo da dove?
 				DefaultEdge edge = e.getEdge(); // (a,b) : ho scoperto 'a' partendo da 'b' oppure 'b' da 'a'
+				// edge è l'arco che l'algoritmo di visita sta attraversando
 				Fermata a = graph.getEdgeSource(edge);
 				Fermata b = graph.getEdgeTarget(edge);
 				if(albero.containsKey(a) && !albero.containsKey(b)) {
@@ -148,7 +149,7 @@ public class Model {
 		
 		GraphIterator<Fermata, DefaultEdge> dfv = new DepthFirstIterator<>(graph, source);
 		while(dfv.hasNext()) {
-			visita.add( dfv.next() ) ;
+			visita.add(dfv.next());
 		}
 		
 		return visita ;
